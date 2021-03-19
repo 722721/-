@@ -1,42 +1,37 @@
 const axios = require("axios");
 
-const SCKEY = process.env.SCKEY;
-axios.defaults.headers.common.cookie = process.env.COOKIE;
+//const SCKEY = process.env.SCKEY;
+//axios.defaults.headers.common.cookie = process.env.COOKIE;
 
-const checkIn = async () => {
-    return axios({
-        method: 'post',
-        url: 'https://glados.rocks/api/user/checkin',
-        data: {
-            token: "glados_network"
-        }
-    })
-}
-
-const status = async () => {
+const ST = async () => {
     return axios({
         method: 'get',
-        url: 'https://glados.rocks/api/user/status'
+        url: 'http://sup.umsin.com/OrderEmail.aspx?cgID=2'
     })
 }
 
-const server = (checkInMessage, leftDays) => {
+const UMS = async () => {
     return axios({
         method: 'get',
-        url: `https://sc.ftqq.com/${SCKEY}.send`,
-        params: {
-            text: `${leftDays}天后到期，${checkInMessage}`
-        }
+        url: 'http://sup.umsin.com/OrderEmail.aspx?cgID=1'
     })
 }
+
+//const server = (checkInMessage, leftDays) => {
+//    return axios({
+//        method: 'get',
+//       url: `https://sc.ftqq.com/${SCKEY}.send`,
+//        params: {
+//            text: `${leftDays}天后到期，${checkInMessage}`
+//        }
+//    })
+//}
 
 const GLaDOSCheckIn = async () => {
-    const checkInMessage = (await checkIn())?.data?.message;
-    const leftDays = parseInt((await status())?.data?.data?.leftDays);
-    console.log(leftDays, checkInMessage);
-    if (SCKEY) {
-        server(checkInMessage, leftDays);
-    }
+    const STMessage = (await ST())?.data?.message;
+    const UMSMessage = (await UMS())?.data?.message;
+    //const leftDays = parseInt((await status())?.data?.data?.leftDays);
+    //console.log(leftDays, checkInMessage);
 }
 
 GLaDOSCheckIn();
