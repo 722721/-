@@ -32,6 +32,7 @@ const server = () => {
 
 const GLaDOSCheckIn = async () => {
     server();
+    console.log(`执行成功`);
 }
 
 GLaDOSCheckIn();
